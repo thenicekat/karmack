@@ -19,7 +19,7 @@ export default function TabOneScreen() {
         style={styles.introText}
         lightColor="rgba(0,0,0,0.8)"
         darkColor="rgba(255,255,255,0.8)">
-        P.S. None of your data is stored on any server, it is all stored locally on your device.
+        P.S. Your data is not stored on any server, it is all stored locally on your device.
       </Text>
 
       {/* Add a summary card containing both good summary length and bad summary length */}

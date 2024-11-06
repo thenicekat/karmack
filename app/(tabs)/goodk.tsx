@@ -30,20 +30,26 @@ export default function GoodKarma() {
       >
         {
           items.length > 0 ? items.map((item: Item) => (
-            <View
-              style={styles.card}
-              darkColor={Colors.dark.greenCardColor}
-              lightColor={Colors.light.greenCardColor}
+            <TouchableOpacity
+              onPress={() => {
+                router.push(`/edit/${item.id}`)
+              }}
               key={item.id}
             >
-              <Text style={styles.text}>
-                {item.description}
-              </Text>
+              <View
+                style={styles.card}
+                darkColor={Colors.dark.greenCardColor}
+                lightColor={Colors.light.greenCardColor}
+              >
+                <Text style={styles.text}>
+                  {item.description}
+                </Text>
 
-              <Text style={styles.text}>
-                {item.karma}
-              </Text>
-            </View>
+                <Text style={styles.text}>
+                  {item.karma}
+                </Text>
+              </View>
+            </TouchableOpacity>
           ))
             :
             <Text

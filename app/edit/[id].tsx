@@ -2,20 +2,34 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View, TextInput } from '@/components/Themed';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useColorScheme } from '@/components/useColorScheme';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import Colors from '@/constants/Colors';
-import { useState } from 'react';
-import { addItemToKarmaStore } from '@/store/itemStore';
+import { useEffect, useState } from 'react';
+import { getItemFromKarmaStore, Item, updateItemInKarmaStore } from '@/store/itemStore';
 
 export default function AddKarma() {
     const colorScheme = useColorScheme();
     const router = useRouter()
+    const { id } = useLocalSearchParams();
+
+    const [currentItem, setCurrentItem] = useState<Item & { key: string } | null>(null);
     const [karmaPointsInput, setKarmaPointsInput] = useState('');
     const [contentInput, setContentInput] = useState('');
 
+    useEffect(() => {
+        if (!id) return;
+
+        let currentItem = getItemFromKarmaStore(id as string);
+        if (!currentItem) return;
+
+        setCurrentItem(currentItem)
+        setContentInput(currentItem.description)
+        setKarmaPointsInput(currentItem.karma.toString())
+    }, [id])
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Create Karma.</Text>
+            <Text style={styles.title}>Edit Karma.</Text>
             <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.3)" />
 
             <View
@@ -76,28 +90,6 @@ export default function AddKarma() {
                     width: '100%',
                 }}
             >
-                <TouchableOpacity
-                    style={{
-                        padding: 20,
-                        margin: 10,
-                        alignItems: 'center',
-                        borderWidth: 1,
-                        borderColor: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text,
-                        borderRadius: 3000,
-                    }}
-                    onPress={() => {
-                        addItemToKarmaStore({
-                            id: Date.now().toString(),
-                            description: contentInput,
-                            karma: parseInt(karmaPointsInput),
-                            created_at: new Date().toISOString(),
-                        }, 'goodkarma');
-                        router.push('/goodk');
-                    }}>
-                    <Text>
-                        <FontAwesome size={60} style={{ marginBottom: -3 }} name='smile-o' />
-                    </Text>
-                </TouchableOpacity>
 
                 <TouchableOpacity
                     style={{
@@ -106,19 +98,20 @@ export default function AddKarma() {
                         alignItems: 'center',
                         borderWidth: 1,
                         borderColor: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text,
-                        borderRadius: 3000,
+                        width: '80%',
+                        borderRadius: 30,
                     }}
                     onPress={() => {
-                        addItemToKarmaStore({
-                            id: Date.now().toString(),
+                        updateItemInKarmaStore({
+                            id: id as string,
                             description: contentInput,
                             karma: parseInt(karmaPointsInput),
                             created_at: new Date().toISOString(),
-                        }, 'badkarma');
-                        router.push('/badk');
+                        }, currentItem?.key as string)
+                        router.push('/');
                     }}>
                     <Text>
-                        <FontAwesome size={60} style={{ marginBottom: -3 }} name='meh-o' />
+                        Edit.
                     </Text>
                 </TouchableOpacity>
             </View>

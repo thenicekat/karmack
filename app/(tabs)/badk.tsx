@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, Touchable, TouchableOpacity } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -32,20 +32,26 @@ export default function BadKarma() {
       >
         {
           items.length > 0 ? items.map((item: Item) => (
-            <View
-              style={styles.card}
-              darkColor={Colors.dark.redCardColor}
-              lightColor={Colors.light.redCardColor}
+            <TouchableOpacity
+              onPress={() => {
+                router.push(`/edit/${item.id}`)
+              }}
               key={item.id}
             >
-              <Text style={styles.text}>
-                {item.description}
-              </Text>
+              <View
+                style={styles.card}
+                darkColor={Colors.dark.redCardColor}
+                lightColor={Colors.light.redCardColor}
+              >
+                <Text style={styles.text}>
+                  {item.description}
+                </Text>
 
-              <Text style={styles.text}>
-                {item.karma}
-              </Text>
-            </View>
+                <Text style={styles.text}>
+                  {item.karma}
+                </Text>
+              </View>
+            </TouchableOpacity>
           ))
             :
             <Text
