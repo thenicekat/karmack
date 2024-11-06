@@ -5,17 +5,19 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { useRouter } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { useState } from 'react';
+import { addItemToKarmaStore } from '@/store/itemStore';
 
 export default function AddKarma() {
     const colorScheme = useColorScheme();
     const router = useRouter()
-    const [titleInput, setTitleInput] = useState('');
+    const [karmaPointsInput, setKarmaPointsInput] = useState('');
     const [contentInput, setContentInput] = useState('');
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Create Karma.</Text>
             <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.3)" />
+
             <View
                 style={{
                     padding: 10,
@@ -36,11 +38,30 @@ export default function AddKarma() {
                             alignContent: 'flex-start',
                             verticalAlign: 'top',
                         }]}
-                        placeholder="Please enter here."
+                        placeholder="Please enter description."
                         keyboardType='default'
                         value={contentInput}
                         onChangeText={setContentInput}
                         multiline={true}
+                    />
+                </View>
+
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        margin: 5,
+                    }}>
+                    <TextInput
+                        style={[styles.smolInput, {
+                            flex: 1,
+                            alignContent: 'flex-start',
+                            verticalAlign: 'top',
+                        }]}
+                        placeholder="Please enter karma points."
+                        keyboardType='numeric'
+                        value={karmaPointsInput}
+                        onChangeText={setKarmaPointsInput}
                     />
                 </View>
             </View>
@@ -64,6 +85,12 @@ export default function AddKarma() {
                         alignItems: 'center',
                     }}
                     onPress={() => {
+                        addItemToKarmaStore({
+                            id: Date.now().toString(),
+                            description: contentInput,
+                            karma: parseInt(karmaPointsInput),
+                            created_at: new Date().toISOString(),
+                        }, 'goodkarma');
                         router.push('/goodk');
                     }}>
                     <Text>
@@ -80,6 +107,12 @@ export default function AddKarma() {
                         alignItems: 'center',
                     }}
                     onPress={() => {
+                        addItemToKarmaStore({
+                            id: Date.now().toString(),
+                            description: contentInput,
+                            karma: parseInt(karmaPointsInput),
+                            created_at: new Date().toISOString(),
+                        }, 'badkarma');
                         router.push('/badk');
                     }}>
                     <Text>
@@ -124,6 +157,6 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         fontSize: 18,
         marginRight: 10,
-        height: 200
+        height: 150
     }
 });

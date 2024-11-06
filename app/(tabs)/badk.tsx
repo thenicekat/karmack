@@ -6,67 +6,14 @@ import { useRouter } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { ScrollView } from 'react-native';
 import { MonoText } from '@/components/StyledText';
+import { getItemsFromKarmaStore, Item } from '@/store/itemStore';
 
 export default function BadKarma() {
   const colorScheme = useColorScheme();
   const router = useRouter()
 
-  const items = [
-    {
-      id: 1,
-      title: 'Item 1',
-      description: 'Description 1',
-      karma: 'bad',
-    },
-    {
-      id: 2,
-      title: 'Item 2',
-      description: 'Description 2',
-      karma: 'bad',
-    },
-    {
-      id: 3,
-      title: 'Item 3',
-      description: 'Description 3',
-      karma: 'bad',
-    },
-    {
-      id: 4,
-      title: 'Item 1',
-      description: 'Description 1',
-      karma: 'bad',
-    },
-    {
-      id: 5,
-      title: 'Item 2',
-      description: 'Description 2',
-      karma: 'bad',
-    },
-    {
-      id: 6,
-      title: 'Item 3',
-      description: 'Description 3',
-      karma: 'bad',
-    },
-    {
-      id: 7,
-      title: 'Item 1',
-      description: 'Description 1',
-      karma: 'bad',
-    },
-    {
-      id: 8,
-      title: 'Item 2',
-      description: 'Description 2',
-      karma: 'bad',
-    },
-    {
-      id: 9,
-      title: 'Item 3',
-      description: 'Description 3',
-      karma: 'bad',
-    }
-  ]
+  const items = getItemsFromKarmaStore('badkarma')
+
 
   return (
     <View style={styles.container}>
@@ -84,22 +31,34 @@ export default function BadKarma() {
         }}
       >
         {
-          items.length > 0 ? items.map((item) => (
+          items.length > 0 ? items.map((item: Item) => (
             <View
               style={styles.card}
               darkColor={Colors.dark.redCardColor}
               lightColor={Colors.light.redCardColor}
               key={item.id}
             >
-              <Text
-                style={{
-                  fontSize: 18,
-                }}>
+              <Text style={styles.text}>
                 {item.description}
+              </Text>
+
+              <Text style={styles.text}>
+                {item.karma}
               </Text>
             </View>
           ))
-            : <Text>You do not have any Bad Karma. Good going so far!</Text>
+            :
+            <Text
+              style={{
+                fontSize: 24,
+                margin: 10,
+                padding: 10,
+                fontFamily: 'monospace',
+                textAlign: 'center',
+              }}
+            >
+              No traces of bad karma here! keep up the positive momentum!
+            </Text>
         }
       </ScrollView>
 
@@ -141,6 +100,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 10,
   },
+  text: {
+    fontSize: 16,
+    padding: 10,
+  },
   separator: {
     marginVertical: 20,
     height: 1,
@@ -151,5 +114,12 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     width: '80%',
-  }
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 });

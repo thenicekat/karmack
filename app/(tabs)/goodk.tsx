@@ -5,67 +5,13 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { useRouter } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { ScrollView } from 'react-native';
+import { getItemsFromKarmaStore, Item } from '@/store/itemStore';
 
 export default function GoodKarma() {
   const colorScheme = useColorScheme();
   const router = useRouter()
 
-  const items = [
-    {
-      id: 1,
-      title: 'Item 1',
-      description: 'Description 1',
-      karma: 'Good',
-    },
-    {
-      id: 2,
-      title: 'Item 2',
-      description: 'Description 2',
-      karma: 'Good',
-    },
-    {
-      id: 3,
-      title: 'Item 3',
-      description: 'Description 3',
-      karma: 'Good',
-    },
-    {
-      id: 4,
-      title: 'Item 1',
-      description: 'Description 1',
-      karma: 'Good',
-    },
-    {
-      id: 5,
-      title: 'Item 2',
-      description: 'Description 2',
-      karma: 'Good',
-    },
-    {
-      id: 6,
-      title: 'Item 3',
-      description: 'Description 3',
-      karma: 'Good',
-    },
-    {
-      id: 7,
-      title: 'Item 1',
-      description: 'Description 1',
-      karma: 'Good',
-    },
-    {
-      id: 8,
-      title: 'Item 2',
-      description: 'Description 2',
-      karma: 'Good',
-    },
-    {
-      id: 9,
-      title: 'Item 3',
-      description: 'Description 3',
-      karma: 'Good',
-    }
-  ]
+  const items = getItemsFromKarmaStore('goodkarma')
 
   return (
     <View style={styles.container}>
@@ -83,22 +29,34 @@ export default function GoodKarma() {
         }}
       >
         {
-          items.length > 0 ? items.map((item) => (
+          items.length > 0 ? items.map((item: Item) => (
             <View
               style={styles.card}
               darkColor={Colors.dark.greenCardColor}
               lightColor={Colors.light.greenCardColor}
               key={item.id}
             >
-              <Text
-                style={{
-                  fontSize: 18,
-                }}>
+              <Text style={styles.text}>
                 {item.description}
+              </Text>
+
+              <Text style={styles.text}>
+                {item.karma}
               </Text>
             </View>
           ))
-            : <Text>You do not have any Good Karma. Good going so far!</Text>
+            :
+            <Text
+              style={{
+                fontSize: 24,
+                margin: 10,
+                padding: 10,
+                fontFamily: 'monospace',
+                textAlign: 'center',
+              }}
+            >
+              Nothing here yet! Here is your chance to make a positive impact!
+            </Text>
         }
       </ScrollView>
 
@@ -140,6 +98,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 10,
   },
+  text: {
+    fontSize: 16,
+    padding: 10,
+  },
   separator: {
     marginVertical: 20,
     height: 1,
@@ -150,5 +112,12 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     width: '80%',
-  }
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 });

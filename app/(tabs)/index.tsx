@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
+import { getBadKarmaScore, getGoodKarmaScore } from '@/store/itemStore';
 
 export default function TabOneScreen() {
   return (
@@ -29,7 +30,7 @@ export default function TabOneScreen() {
         width: '80%'
       }}>
         <View>
-          <Text style={styles.summaryText}>Good Karma: 0</Text>
+          <Text style={styles.summaryText}>Good Karma: {getGoodKarmaScore()}</Text>
         </View>
         <Text
           style={{
@@ -39,7 +40,7 @@ export default function TabOneScreen() {
           |
         </Text>
         <View>
-          <Text style={styles.summaryText}>Bad Karma: 0</Text>
+          <Text style={styles.summaryText}>Bad Karma: {getBadKarmaScore()}</Text>
         </View></View>
     </View>
   );
