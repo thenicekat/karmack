@@ -40,8 +40,8 @@ export default function BadKarma() {
             >
               <View
                 style={styles.card}
-                darkColor={Colors.dark.redCardColor}
-                lightColor={Colors.light.redCardColor}
+                darkColor={Colors.dark.danger}
+                lightColor={Colors.light.danger}
               >
                 <Text style={styles.text}>
                   {item.description}

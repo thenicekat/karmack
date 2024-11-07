@@ -2,9 +2,19 @@ import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { getBadKarmaScore, getGoodKarmaScore } from '@/store/itemStore';
 
-export default function TabOneScreen() {
+export default function Home() {
+  const goodKarma = getGoodKarmaScore();
+  const badKarma = getBadKarmaScore();
+
+  // const percentGood = goodKarma / (goodKarma + badKarma) * 100;
+  // const percentBad = 100 - percentGood;
+
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.homeScreenContainer}
+    // darkColor={`rgba(${percentBad * 255 / 100},${percentGood * 255 / 100},0, 0.5)`}
+    // lightColor={`rgba(${percentBad * 255 / 100},${percentGood * 255 / 100},0, 0.5)`}
+    >
       <Text style={styles.title}>Home</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.3)" />
 
@@ -22,32 +32,24 @@ export default function TabOneScreen() {
         P.S. Your data is not stored on any server, it is all stored locally on your device.
       </Text>
 
-      {/* Add a summary card containing both good summary length and bad summary length */}
       <View style={{
-        flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'baseline',
+        alignContent: 'center',
         width: '80%'
       }}>
         <View>
-          <Text style={styles.summaryText}>Good Karma: {getGoodKarmaScore()}</Text>
+          <Text style={styles.summaryText}>Good Karma: {goodKarma}</Text>
         </View>
-        <Text
-          style={{
-            fontSize: 40
-          }}
-        >
-          |
-        </Text>
+
         <View>
-          <Text style={styles.summaryText}>Bad Karma: {getBadKarmaScore()}</Text>
+          <Text style={styles.summaryText}>Bad Karma: {badKarma}</Text>
         </View></View>
-    </View>
+    </View >
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  homeScreenContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

@@ -5,8 +5,8 @@ export default {
   light: {
     text: '#000',
     background: '#fff',
-    greenCardColor: '#AEF359',
-    redCardColor: '#D0312D',
+    success: '#B5EAD7',
+    danger: '#FF9AA2',
     buttonColor: '#f0f0f0',
     inputBackground: '#f0f0f0',
     tint: tintColorLight,
@@ -16,8 +16,8 @@ export default {
   dark: {
     text: '#fff',
     background: '#000',
-    greenCardColor: '#32612D',
-    redCardColor: '#E3242B',
+    success: '#32612D',
+    danger: '#E3242B',
     buttonColor: '#333',
     inputBackground: '#333',
     tint: tintColorDark,

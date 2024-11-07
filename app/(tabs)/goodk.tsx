@@ -38,8 +38,8 @@ export default function GoodKarma() {
             >
               <View
                 style={styles.card}
-                darkColor={Colors.dark.greenCardColor}
-                lightColor={Colors.light.greenCardColor}
+                darkColor={Colors.dark.success}
+                lightColor={Colors.light.success}
               >
                 <Text style={styles.text}>
                   {item.description}

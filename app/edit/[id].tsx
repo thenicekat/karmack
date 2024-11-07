@@ -5,7 +5,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { useEffect, useState } from 'react';
-import { getItemFromKarmaStore, Item, updateItemInKarmaStore } from '@/store/itemStore';
+import { getItemFromKarmaStore, Item, removeItemFromKarmaStore, updateItemInKarmaStore } from '@/store/itemStore';
 
 export default function AddKarma() {
     const colorScheme = useColorScheme();
@@ -82,7 +82,6 @@ export default function AddKarma() {
 
             <View
                 style={{
-                    flexDirection: 'row',
                     margin: 10,
                     justifyContent: 'space-around',
                     alignContent: 'center',
@@ -93,13 +92,12 @@ export default function AddKarma() {
 
                 <TouchableOpacity
                     style={{
-                        padding: 20,
-                        margin: 10,
+                        padding: 15,
+                        margin: 5,
                         alignItems: 'center',
-                        borderWidth: 1,
-                        borderColor: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text,
+                        backgroundColor: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text,
                         width: '80%',
-                        borderRadius: 30,
+                        borderRadius: 25,
                     }}
                     onPress={() => {
                         updateItemInKarmaStore({
@@ -110,8 +108,30 @@ export default function AddKarma() {
                         }, currentItem?.key as string)
                         router.push('/');
                     }}>
-                    <Text>
+                    <Text
+                        style={{
+                            color: colorScheme === 'dark' ? Colors.light.text : Colors.dark.text,
+                        }}
+                    >
                         Edit.
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={{
+                        padding: 15,
+                        margin: 5,
+                        alignItems: 'center',
+                        width: '80%',
+                        borderRadius: 25,
+                        backgroundColor: colorScheme === 'dark' ? Colors.dark.danger : Colors.light.danger,
+                    }}
+                    onPress={() => {
+                        removeItemFromKarmaStore(id as string, currentItem?.key as string)
+                        router.push('/');
+                    }}>
+                    <Text>
+                        Delete.
                     </Text>
                 </TouchableOpacity>
             </View>
