@@ -11,3 +11,7 @@ aab-release:
 	cd android && ./gradlew bundleRelease --stacktrace
 	@echo "AAB built successfully!"
 .PHONY: aab-release
+
+run:
+	npx expo run:android
+.PHONY: run

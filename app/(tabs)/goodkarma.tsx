@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { ScrollView } from 'react-native';
 import { getItemsFromKarmaStore, Item } from '@/store/itemStore';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function GoodKarma() {
   const colorScheme = useColorScheme();
@@ -36,11 +37,7 @@ export default function GoodKarma() {
               }}
               key={item.id}
             >
-              <View
-                style={styles.card}
-                darkColor={Colors.dark.success}
-                lightColor={Colors.light.success}
-              >
+              <LinearGradient colors={['#009900', '#00e600']} style={styles.card}>
                 <Text style={styles.text}>
                   {item.description}
                 </Text>
@@ -48,7 +45,7 @@ export default function GoodKarma() {
                 <Text style={styles.text}>
                   {item.karma}
                 </Text>
-              </View>
+              </LinearGradient>
             </TouchableOpacity>
           ))
             :
@@ -83,6 +80,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     padding: 10,
+    fontFamily: 'monospace',
+    fontWeight: 'bold',
+    textTransform: "capitalize",
   },
   separator: {
     marginVertical: 20,
@@ -90,16 +90,14 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   card: {
-    padding: 10,
-    margin: 10,
-    borderRadius: 10,
-    width: '80%',
+    width: '90%',
+    marginVertical: 8,
+    padding: 16,
+    borderRadius: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
 });
