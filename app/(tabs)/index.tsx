@@ -1,78 +1,144 @@
-import { StyleSheet } from 'react-native';
-import { Text, View } from '@/components/Themed';
-import { getBadKarmaScore, getGoodKarmaScore } from '@/store/itemStore';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput } from '@/components/Themed';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useColorScheme } from '@/components/useColorScheme';
+import { useRouter } from 'expo-router';
+import Colors from '@/constants/Colors';
+import { useState } from 'react';
+import { addItemToKarmaStore } from '@/store/itemStore';
 
-export default function Home() {
-  const goodKarma = getGoodKarmaScore();
-  const badKarma = getBadKarmaScore();
+export default function AddKarma() {
+  const colorScheme = useColorScheme();
+  const router = useRouter();
+  const [karmaPointsInput, setKarmaPointsInput] = useState('');
+  const [contentInput, setContentInput] = useState('');
 
-  // const percentGood = goodKarma / (goodKarma + badKarma) * 100;
-  // const percentBad = 100 - percentGood;
+  const addItem = (key: string) => {
+    if (contentInput.length === 0 || karmaPointsInput.length === 0) {
+      alert('Please fill out all fields.');
+      return;
+    }
+
+    addItemToKarmaStore({
+      id: Date.now().toString(),
+      description: contentInput,
+      karma: parseInt(karmaPointsInput),
+      created_at: new Date().toISOString(),
+    }, key);
+
+    setContentInput('');
+    setKarmaPointsInput('');
+
+    if (key === 'goodkarma') router.push('/goodkarma');
+    if (key === 'badkarma') router.push('/badkarma');
+  }
 
   return (
-    <View
-      style={styles.homeScreenContainer}
-    // darkColor={`rgba(${percentBad * 255 / 100},${percentGood * 255 / 100},0, 0.5)`}
-    // lightColor={`rgba(${percentBad * 255 / 100},${percentGood * 255 / 100},0, 0.5)`}
-    >
-      <Text style={styles.title}>Home</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.3)" />
-
+    <View style={styles.container}>
+      <Text style={styles.title}>Karmack.</Text>
       <Text
         style={styles.introText}
         lightColor="rgba(0,0,0,0.8)"
         darkColor="rgba(255,255,255,0.8)">
-        This app is made to keep track of your good and bad karma. You can add and remove karma items as you see fit.
+        This app is made to keep track of your good and bad karma. You can add and remove karma items as you see fit. Track the things that happen to you and the things you do. Hope this makes a difference.
       </Text>
 
-      <Text
-        style={styles.introText}
-        lightColor="rgba(0,0,0,0.8)"
-        darkColor="rgba(255,255,255,0.8)">
-        P.S. Your data is not stored on any server, it is all stored locally on your device.
-      </Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.bigInput}
+          placeholder="Please enter description."
+          keyboardType='default'
+          value={contentInput}
+          onChangeText={setContentInput}
+          multiline={true}
+        />
+        <TextInput
+          style={styles.smolInput}
+          placeholder="Please enter karma points."
+          keyboardType='numeric'
+          value={karmaPointsInput}
+          onChangeText={setKarmaPointsInput}
+        />
+      </View>
 
-      <View style={{
-        justifyContent: 'space-between',
-        alignContent: 'center',
-        width: '80%'
-      }}>
-        <View>
-          <Text style={styles.summaryText}>Good Karma: {goodKarma}</Text>
-        </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            addItem('goodkarma');
+          }}>
+          <FontAwesome size={60} style={[styles.icon, {
+            color: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text,
+          }]} name='smile-o' />
+        </TouchableOpacity>
 
-        <View>
-          <Text style={styles.summaryText}>Bad Karma: {badKarma}</Text>
-        </View></View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            addItem('badkarma');
+          }}>
+          <FontAwesome size={60} style={[styles.icon, {
+            color: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text,
+          }]} name='meh-o' />
+        </TouchableOpacity>
+      </View>
     </View >
   );
 }
 
 const styles = StyleSheet.create({
-  homeScreenContainer: {
+  container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  introText: {
-    fontSize: 17,
-    lineHeight: 24,
-    textAlign: 'center',
-    margin: 10
-  },
-  summaryText: {
-    fontSize: 24,
-    lineHeight: 24,
-    textAlign: 'center',
-    margin: 10
+    padding: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 32,
     fontWeight: 'bold',
+    fontFamily: 'monospace',
+    marginTop: 20,
+    padding: 10,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  introText: {
+    fontSize: 14,
+    padding: 10,
+    textAlign: 'center',
+    marginBottom: 20,
+    fontFamily: 'monospace',
+  },
+  inputContainer: {
+    width: '100%',
+    padding: 5,
+    borderRadius: 10,
+  },
+  smolInput: {
+    padding: 15,
+    borderRadius: 10,
+    fontSize: 18,
+    fontFamily: 'monospace',
+    marginBottom: 10,
+  },
+  bigInput: {
+    padding: 15,
+    borderRadius: 10,
+    fontSize: 18,
+    marginBottom: 10,
+    height: 150,
+    fontFamily: 'monospace',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    margin: 10,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
+  },
+  button: {
+    padding: 20,
+    margin: 10,
+    alignItems: 'center',
+  },
+  icon: {
+    marginBottom: -3,
   },
 });

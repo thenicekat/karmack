@@ -22,7 +22,7 @@ export default function TabLayout() {
         headerShown: false,
       }}>
       <Tabs.Screen
-        name="badk"
+        name="badkarma"
         options={{
           title: 'Bad Karma',
           tabBarIcon: ({ color }) => <TabBarIcon name="meh-o" color={color} />,
@@ -38,7 +38,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="goodk"
+        name="goodkarma"
         options={{
           title: 'Good Karma',
           tabBarIcon: ({ color }) => <TabBarIcon name="smile-o" color={color} />,

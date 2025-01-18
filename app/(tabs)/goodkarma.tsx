@@ -65,30 +65,6 @@ export default function GoodKarma() {
             </Text>
         }
       </ScrollView>
-
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          bottom: 30,
-          right: 30,
-          backgroundColor: colorScheme === 'dark' ? Colors.dark.buttonColor : Colors.light.buttonColor,
-          width: 60,
-          height: 60,
-          borderRadius: 30,
-          justifyContent: 'center',
-          alignItems: 'center',
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.8,
-          shadowRadius: 2,
-          elevation: 5,
-        }}
-        onPress={() => {
-          router.push('/add')
-        }}
-      >
-        <FontAwesome name="plus" size={28} color={colorScheme === "dark" ? 'white' : 'black'} />
-      </TouchableOpacity>
     </View >
   );
 }
