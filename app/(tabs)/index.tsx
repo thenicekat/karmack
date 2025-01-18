@@ -65,21 +65,21 @@ export default function AddKarma() {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            addItem('goodkarma');
-          }}>
-          <FontAwesome size={60} style={[styles.icon, {
-            color: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text,
-          }]} name='smile-o' />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
             addItem('badkarma');
           }}>
           <FontAwesome size={60} style={[styles.icon, {
             color: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text,
           }]} name='meh-o' />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            addItem('goodkarma');
+          }}>
+          <FontAwesome size={60} style={[styles.icon, {
+            color: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text,
+          }]} name='smile-o' />
         </TouchableOpacity>
       </View>
     </View >
