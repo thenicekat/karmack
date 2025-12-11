@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Karmack",
+    "slug": "karmack",
+    "version": "1.0.6",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#F9FAFB"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.thenicekat.karmack"
+    },
+    "android": {
+      "package": "com.thenicekat.karmack",
+      "adaptiveIcon": {
+        "backgroundColor": "#F9FAFB"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "updates": {
+      "enabled": false,
+      "fallbackToCacheTimeout": 0
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
+  }
+}
+
+
