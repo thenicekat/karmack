@@ -14,10 +14,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.thenicekat.karmack"
+      "bundleIdentifier": "com.divyateja.karmack"
     },
     "android": {
-      "package": "com.thenicekat.karmack",
+      "package": "com.divyateja.karmack",
       "adaptiveIcon": {
         "backgroundColor": "#F9FAFB"
       }

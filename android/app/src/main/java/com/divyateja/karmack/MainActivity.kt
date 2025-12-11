@@ -1,4 +1,4 @@
-package com.thenicekat.karmack
+package com.divyateja.karmack
 
 import android.os.Build
 import android.os.Bundle
@@ -10,8 +10,8 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 import expo.modules.ReactActivityDelegateWrapper
 
-import com.thenicekat.karmack.BuildConfig
-import com.thenicekat.karmack.R
+import com.divyateja.karmack.BuildConfig
+import com.divyateja.karmack.R
 
 class MainActivity : ReactActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {

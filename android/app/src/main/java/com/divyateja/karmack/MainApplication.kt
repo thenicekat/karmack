@@ -1,4 +1,4 @@
-package com.thenicekat.karmack
+package com.divyateja.karmack
 
 import android.app.Application
 import android.content.res.Configuration
@@ -16,7 +16,7 @@ import com.facebook.react.defaults.DefaultReactNativeHost
 import expo.modules.ApplicationLifecycleDispatcher
 import expo.modules.ReactNativeHostWrapper
 
-import com.thenicekat.karmack.BuildConfig
+import com.divyateja.karmack.BuildConfig
 
 class MainApplication : Application(), ReactApplication {
 
