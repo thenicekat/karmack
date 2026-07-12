@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Colors } from '../constants/colors';
+import { Colors, Space, Radius, Type } from '../constants/colors';
 import { KarmaEntryCard } from './KarmaEntryCard';
 import type { KarmaEntry } from '../types';
 
@@ -13,9 +13,10 @@ export const KarmaEntryList: React.FC<KarmaEntryListProps> = ({ entries, onDelet
   if (entries.length === 0) {
     return (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyEmoji}>📝</Text>
         <Text style={styles.emptyTitle}>No entries yet today</Text>
-        <Text style={styles.emptySubtitle}>Start tracking your karma!</Text>
+        <Text style={styles.emptySubtitle}>
+          Log the good and the bad. It compounds.
+        </Text>
       </View>
     );
   }
@@ -26,7 +27,7 @@ export const KarmaEntryList: React.FC<KarmaEntryListProps> = ({ entries, onDelet
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Today's Entries</Text>
+      <Text style={styles.label}>TODAY · {entries.length}</Text>
       {sortedEntries.map(entry => (
         <KarmaEntryCard key={entry.id} entry={entry} onDelete={onDeleteEntry} />
       ))}
@@ -36,44 +37,35 @@ export const KarmaEntryList: React.FC<KarmaEntryListProps> = ({ entries, onDelet
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 24,
+    marginBottom: Space.xl,
   },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: Colors.text,
-    marginBottom: 16,
-    letterSpacing: -0.5,
+  label: {
+    fontSize: Type.micro,
+    fontWeight: '600',
+    letterSpacing: 2,
+    color: Colors.textMuted,
+    marginBottom: Space.sm,
+    marginLeft: Space.xs,
   },
   emptyContainer: {
-    backgroundColor: Colors.surface,
-    padding: 48,
-    borderRadius: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 2,
+    paddingVertical: Space.xxl,
+    paddingHorizontal: Space.lg,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
+    borderRadius: Radius.md,
     borderStyle: 'dashed',
-  },
-  emptyEmoji: {
-    fontSize: 48,
-    marginBottom: 16,
+    alignItems: 'center',
+    marginBottom: Space.xl,
   },
   emptyTitle: {
-    fontSize: 18,
+    fontSize: Type.body,
     fontWeight: '600',
     color: Colors.text,
-    marginBottom: 6,
+    marginBottom: Space.xs,
   },
   emptySubtitle: {
-    fontSize: 14,
-    color: Colors.textSecondary,
+    fontSize: Type.small,
+    color: Colors.textMuted,
+    textAlign: 'center',
   },
 });
-
-
-

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Colors } from '../constants/colors';
-import { GradientCard } from './GradientCard';
+import { Colors, Space, Radius, Type } from '../constants/colors';
 import type { KarmaStats } from '../types';
 
 interface KarmaSummaryProps {
@@ -9,27 +8,26 @@ interface KarmaSummaryProps {
 }
 
 export const KarmaSummary: React.FC<KarmaSummaryProps> = ({ stats }) => {
+  const isPositive = stats.net >= 0;
+  const netColor = stats.net === 0 ? Colors.text : isPositive ? Colors.good : Colors.bad;
+
   return (
     <View style={styles.container}>
-      <View style={styles.summaryRow}>
-        <GradientCard type="good">
-          <Text style={styles.cardEmoji}>✨</Text>
-          <Text style={styles.summaryLabel}>Good</Text>
-          <Text style={styles.summaryValue}>{stats.good}</Text>
-        </GradientCard>
+      <Text style={styles.label}>NET KARMA TODAY</Text>
+      <Text style={[styles.value, { color: netColor }]}>
+        {isPositive && stats.net !== 0 ? '+' : ''}{stats.net}
+      </Text>
 
-        <GradientCard type="bad" style={{ marginLeft: 12 }}>
-          <Text style={styles.cardEmoji}>⚠️</Text>
-          <Text style={styles.summaryLabel}>Bad</Text>
-          <Text style={styles.summaryValue}>{stats.bad}</Text>
-        </GradientCard>
-      </View>
-
-      <View style={styles.netContainer}>
-        <Text style={styles.netLabel}>Net Karma</Text>
-        <Text style={[styles.netValue, stats.net >= 0 ? styles.positive : styles.negative]}>
-          {stats.net >= 0 ? '+' : ''}{stats.net}
-        </Text>
+      <View style={styles.splitRow}>
+        <View style={styles.splitItem}>
+          <Text style={styles.splitLabel}>GOOD</Text>
+          <Text style={[styles.splitValue, { color: Colors.good }]}>{stats.good}</Text>
+        </View>
+        <View style={styles.divider} />
+        <View style={styles.splitItem}>
+          <Text style={styles.splitLabel}>BAD</Text>
+          <Text style={[styles.splitValue, { color: Colors.bad }]}>{stats.bad}</Text>
+        </View>
       </View>
     </View>
   );
@@ -37,64 +35,57 @@ export const KarmaSummary: React.FC<KarmaSummaryProps> = ({ stats }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 24,
-  },
-  summaryRow: {
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  cardEmoji: {
-    fontSize: 32,
-    marginBottom: 8,
-  },
-  summaryLabel: {
-    fontSize: 13,
-    color: '#fff',
-    opacity: 0.95,
-    fontWeight: '600',
-    letterSpacing: 0.5,
-    marginBottom: 4,
-    textTransform: 'uppercase',
-  },
-  summaryValue: {
-    fontSize: 36,
-    fontWeight: '700',
-    color: '#fff',
-    marginTop: 4,
-  },
-  netContainer: {
     backgroundColor: Colors.surface,
-    padding: 20,
-    borderRadius: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
     borderWidth: 1,
-    borderColor: Colors.borderLight,
+    borderColor: Colors.border,
+    borderRadius: Radius.lg,
+    paddingVertical: Space.xl,
+    paddingHorizontal: Space.lg,
+    marginBottom: Space.xl,
+    alignItems: 'center',
   },
-  netLabel: {
-    fontSize: 12,
-    color: Colors.textSecondary,
+  label: {
+    fontSize: Type.micro,
     fontWeight: '600',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
-    marginBottom: 8,
+    letterSpacing: 2,
+    color: Colors.textMuted,
+    marginBottom: Space.sm,
   },
-  netValue: {
-    fontSize: 42,
+  value: {
+    fontSize: Type.hero,
     fontWeight: '800',
-    letterSpacing: -1,
+    letterSpacing: -2,
+    fontVariant: ['tabular-nums'],
+    marginBottom: Space.lg,
   },
-  positive: {
-    color: Colors.good,
+  splitRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-around',
+    borderTopWidth: 1,
+    borderTopColor: Colors.border,
+    paddingTop: Space.md,
   },
-  negative: {
-    color: Colors.bad,
+  splitItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  splitLabel: {
+    fontSize: Type.micro,
+    letterSpacing: 1.5,
+    fontWeight: '600',
+    color: Colors.textMuted,
+    marginBottom: Space.xs,
+  },
+  splitValue: {
+    fontSize: Type.title,
+    fontWeight: '700',
+    fontVariant: ['tabular-nums'],
+  },
+  divider: {
+    width: 1,
+    height: 28,
+    backgroundColor: Colors.border,
   },
 });
-
-
-

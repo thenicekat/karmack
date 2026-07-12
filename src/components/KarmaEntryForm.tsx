@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
-import { Colors } from '../constants/colors';
-import { GradientButton } from './GradientButton';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { Colors, Space, Radius, Type } from '../constants/colors';
 import type { KarmaType } from '../types';
 
 interface KarmaEntryFormProps {
@@ -12,45 +11,46 @@ export const KarmaEntryForm: React.FC<KarmaEntryFormProps> = ({ onAddKarma }) =>
   const [description, setDescription] = useState('');
 
   const handleAddKarma = (type: KarmaType) => {
-    if (!description.trim()) {
-      Alert.alert('Description Required', 'Please enter a description for your karma entry', [
-        { text: 'OK' },
-      ]);
+    const trimmed = description.trim();
+    if (!trimmed) {
+      Alert.alert('Description required', 'Enter what happened before logging.');
       return;
     }
-
-    onAddKarma(type, description.trim());
+    onAddKarma(type, trimmed);
     setDescription('');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Add Karma Entry</Text>
+      <Text style={styles.label}>LOG SOMETHING</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="What did you do?"
-        placeholderTextColor={Colors.textTertiary}
+        placeholder="What happened?"
+        placeholderTextColor={Colors.textFaint}
         value={description}
         onChangeText={setDescription}
         multiline
-        numberOfLines={3}
       />
 
       <View style={styles.buttonRow}>
-        <GradientButton
-          type="good"
-          onPress={() => handleAddKarma('good')}
-          label="Good"
-          emoji="✨"
-        />
-        <View style={styles.buttonSpacer} />
-        <GradientButton
-          type="bad"
+        <TouchableOpacity
+          style={[styles.button, styles.badButton]}
           onPress={() => handleAddKarma('bad')}
-          label="Bad"
-          emoji="⚠️"
-        />
+          activeOpacity={0.7}
+        >
+          <Text style={[styles.buttonSign, { color: Colors.bad }]}>−</Text>
+          <Text style={[styles.buttonLabel, { color: Colors.bad }]}>Bad</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, styles.goodButton]}
+          onPress={() => handleAddKarma('good')}
+          activeOpacity={0.7}
+        >
+          <Text style={[styles.buttonSign, { color: Colors.good }]}>+</Text>
+          <Text style={[styles.buttonLabel, { color: Colors.good }]}>Good</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -58,44 +58,58 @@ export const KarmaEntryForm: React.FC<KarmaEntryFormProps> = ({ onAddKarma }) =>
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.surface,
-    padding: 20,
-    borderRadius: 20,
-    marginBottom: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
-    borderWidth: 1,
-    borderColor: Colors.borderLight,
+    marginBottom: Space.xl,
   },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: Colors.text,
-    marginBottom: 16,
-    letterSpacing: -0.5,
+  label: {
+    fontSize: Type.micro,
+    fontWeight: '600',
+    letterSpacing: 2,
+    color: Colors.textMuted,
+    marginBottom: Space.sm,
+    marginLeft: Space.xs,
   },
   input: {
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: Colors.border,
-    borderRadius: 12,
-    padding: 16,
-    fontSize: 16,
+    borderRadius: Radius.md,
+    padding: Space.lg,
+    fontSize: Type.body,
     color: Colors.text,
-    minHeight: 80,
+    minHeight: 88,
     textAlignVertical: 'top',
-    marginBottom: 16,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.surface,
+    marginBottom: Space.md,
   },
   buttonRow: {
     flexDirection: 'row',
+    gap: Space.sm,
   },
-  buttonSpacer: {
-    width: 12,
+  button: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: Space.sm,
+    paddingVertical: Space.lg,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+  },
+  goodButton: {
+    backgroundColor: Colors.goodSoft,
+    borderColor: Colors.good,
+  },
+  badButton: {
+    backgroundColor: Colors.badSoft,
+    borderColor: Colors.bad,
+  },
+  buttonSign: {
+    fontSize: 24,
+    fontWeight: '700',
+    lineHeight: 24,
+  },
+  buttonLabel: {
+    fontSize: Type.body,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
 });
-
-
-

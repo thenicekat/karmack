@@ -4,11 +4,20 @@ import { useKarma } from './src/hooks/useKarma';
 import { KarmaSummary } from './src/components/KarmaSummary';
 import { KarmaEntryForm } from './src/components/KarmaEntryForm';
 import { KarmaEntryList } from './src/components/KarmaEntryList';
-import { Colors } from './src/constants/colors';
+import { Colors, Space, Type } from './src/constants/colors';
 
 export default function App() {
   const { entries, addKarma, deleteEntry, calculateStats } = useKarma();
   const stats = useMemo(() => calculateStats(), [calculateStats]);
+  const today = useMemo(
+    () =>
+      new Date().toLocaleDateString(undefined, {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric',
+      }),
+    []
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -17,10 +26,11 @@ export default function App() {
         style={styles.scrollView}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <View style={styles.header}>
-          <Text style={styles.title}>Karmack</Text>
-          <Text style={styles.subtitle}>Track your daily karma</Text>
+          <Text style={styles.title}>karmack</Text>
+          <Text style={styles.subtitle}>{today}</Text>
         </View>
 
         <KarmaSummary stats={stats} />
@@ -40,28 +50,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    padding: 20,
-    paddingBottom: 40,
+    padding: Space.lg,
+    paddingBottom: Space.xxl,
   },
   header: {
-    alignItems: 'center',
-    marginBottom: 32,
-    marginTop: 8,
+    marginBottom: Space.xl,
+    marginTop: Space.sm,
   },
   title: {
-    fontSize: 42,
+    fontSize: Type.display,
     fontWeight: '800',
     color: Colors.text,
-    marginBottom: 6,
     letterSpacing: -1.5,
   },
   subtitle: {
-    fontSize: 16,
-    color: Colors.textSecondary,
+    fontSize: Type.small,
+    color: Colors.textMuted,
     fontWeight: '500',
-    letterSpacing: 0.3,
+    marginTop: 2,
+    letterSpacing: 0.2,
   },
 });
-
-
-

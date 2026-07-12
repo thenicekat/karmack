@@ -1,36 +1,43 @@
 export const Colors = {
-  // Primary colors
-  primary: '#6366F1',
-  primaryDark: '#4F46E5',
-  primaryLight: '#818CF8',
-  
-  // Karma colors
-  good: '#10B981',
-  goodLight: '#34D399',
-  goodDark: '#059669',
-  bad: '#EF4444',
-  badLight: '#F87171',
-  badDark: '#DC2626',
-  
-  // Neutral colors
-  background: '#F9FAFB',
+  background: '#FAFAFA',
   surface: '#FFFFFF',
-  text: '#111827',
-  textSecondary: '#6B7280',
-  textTertiary: '#9CA3AF',
-  border: '#E5E7EB',
-  borderLight: '#F3F4F6',
-  
-  // Status colors
-  positive: '#10B981',
-  negative: '#EF4444',
-  neutral: '#6B7280',
-  
-  // Gradients
-  goodGradient: ['#10B981', '#059669'] as const,
-  badGradient: ['#EF4444', '#DC2626'] as const,
-  primaryGradient: ['#6366F1', '#4F46E5'] as const,
+
+  text: '#0F0F10',
+  textMuted: '#6B7280',
+  textFaint: '#9CA3AF',
+
+  border: '#ECECEF',
+  borderStrong: '#DCDCE1',
+
+  good: '#0E9F6E',
+  goodSoft: '#E7F6EF',
+  bad: '#DC2626',
+  badSoft: '#FCEBEB',
+
+  danger: '#DC2626',
 };
 
+export const Space = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  xxl: 32,
+};
 
+export const Radius = {
+  sm: 8,
+  md: 12,
+  lg: 16,
+  pill: 999,
+};
 
+export const Type = {
+  hero: 56,
+  display: 32,
+  title: 20,
+  body: 15,
+  small: 13,
+  micro: 11,
+};

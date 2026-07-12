@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Colors } from '../constants/colors';
+import { Colors, Space, Radius, Type } from '../constants/colors';
 import { DateUtils } from '../utils/date';
 import type { KarmaEntry } from '../types';
 
@@ -11,27 +11,33 @@ interface KarmaEntryCardProps {
 
 export const KarmaEntryCard: React.FC<KarmaEntryCardProps> = ({ entry, onDelete }) => {
   const isGood = entry.type === 'good';
-  const borderColor = isGood ? Colors.good : Colors.bad;
+  const accent = isGood ? Colors.good : Colors.bad;
+  const soft = isGood ? Colors.goodSoft : Colors.badSoft;
+  const sign = isGood ? '+' : '−';
 
   return (
-    <View style={[styles.card, { borderLeftColor: borderColor }]}>
-      <View style={styles.cardContent}>
-        <View style={styles.cardHeader}>
-          <View style={styles.typeContainer}>
-            <Text style={styles.typeEmoji}>{isGood ? '✨' : '⚠️'}</Text>
-            <Text style={styles.typeText}>{isGood ? 'Good' : 'Bad'} Karma</Text>
+    <View style={styles.card}>
+      <View style={[styles.rail, { backgroundColor: accent }]} />
+      <View style={styles.content}>
+        <View style={styles.row}>
+          <Text style={styles.description} numberOfLines={3}>
+            {entry.description}
+          </Text>
+          <View style={[styles.chip, { backgroundColor: soft }]}>
+            <Text style={[styles.chipText, { color: accent }]}>{sign}1</Text>
           </View>
-          <Text style={styles.timeText}>{DateUtils.formatTime(entry.timestamp)}</Text>
         </View>
-        <Text style={styles.description}>{entry.description}</Text>
+        <View style={styles.footer}>
+          <Text style={styles.time}>{DateUtils.formatTime(entry.timestamp)}</Text>
+          <TouchableOpacity
+            onPress={() => onDelete(entry.id)}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            activeOpacity={0.6}
+          >
+            <Text style={styles.deleteText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <TouchableOpacity
-        style={styles.deleteButton}
-        onPress={() => onDelete(entry.id)}
-        activeOpacity={0.6}
-      >
-        <Text style={styles.deleteIcon}>🗑️</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -40,62 +46,60 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     backgroundColor: Colors.surface,
-    padding: 16,
-    borderRadius: 16,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 2,
-    borderWidth: 1.5,
-    borderLeftWidth: 4,
-    borderColor: Colors.borderLight,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    marginBottom: Space.sm,
+    overflow: 'hidden',
   },
-  cardContent: {
+  rail: {
+    width: 3,
+  },
+  content: {
     flex: 1,
+    padding: Space.lg,
   },
-  cardHeader: {
+  row: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  typeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  typeEmoji: {
-    fontSize: 16,
-  },
-  typeText: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: Colors.text,
-    letterSpacing: 0.3,
-  },
-  timeText: {
-    fontSize: 12,
-    color: Colors.textTertiary,
-    fontWeight: '500',
+    alignItems: 'flex-start',
+    gap: Space.md,
   },
   description: {
-    fontSize: 15,
-    color: Colors.textSecondary,
-    lineHeight: 22,
-    letterSpacing: -0.2,
+    flex: 1,
+    fontSize: Type.body,
+    color: Colors.text,
+    lineHeight: 21,
+    fontWeight: '500',
   },
-  deleteButton: {
-    padding: 8,
-    justifyContent: 'center',
+  chip: {
+    borderRadius: Radius.sm,
+    paddingHorizontal: Space.sm,
+    paddingVertical: 2,
+    minWidth: 36,
     alignItems: 'center',
-    marginLeft: 8,
   },
-  deleteIcon: {
-    fontSize: 20,
+  chipText: {
+    fontSize: Type.small,
+    fontWeight: '700',
+    fontVariant: ['tabular-nums'],
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: Space.md,
+  },
+  time: {
+    fontSize: Type.micro,
+    color: Colors.textFaint,
+    fontWeight: '500',
+    letterSpacing: 0.3,
+  },
+  deleteText: {
+    fontSize: Type.micro,
+    color: Colors.textMuted,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
   },
 });
-
-
-
